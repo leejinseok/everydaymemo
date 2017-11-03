@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "leejinseok",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "dotenv": "^4.0.0",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.2.1",
+    "moment": "^2.19.1",
+    "mongoose": "^4.13.0",
+    "mongoose-double": "0.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "scripts": {
+    "start:dev": "NODE_PATH=src nodemon --watch src/ src/index.js"
+  }
+}
