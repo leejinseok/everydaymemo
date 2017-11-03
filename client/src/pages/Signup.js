@@ -1,18 +1,18 @@
 import React from 'react';
+import FormContainer from 'containers/Signup/FormContainer';
 import styled from 'styled-components';
-import FormContainer from 'containers/Welcome/FormContainer';
 
 const Wrapper = styled.div`
     width: 100%;
     padding: 1rem;
 `;
 
-const Welcome = ({history}) => {
+const Signup = ({history}) => {
     return (
         <Wrapper>
-            <FormContainer history={history}/>
+            <FormContainer />
         </Wrapper>
     )
 };
 
-export default Welcome;
+export default Signup;

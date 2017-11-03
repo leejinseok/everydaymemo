@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import HeaderContainer from './containers/Base/HeaderContainer';
-import { Welcome } from './pages';
+import { Welcome, Signup } from './pages';
 import styled from 'styled-components';
 
 class App extends Component {
@@ -10,6 +10,7 @@ class App extends Component {
             <div>
                 <HeaderContainer />
                 <Route exact path="/" component={Welcome} />
+                <Route path="/signup" component={Signup} />
             </div>
         );
     }

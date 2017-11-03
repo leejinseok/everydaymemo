@@ -2,61 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from 'redux/modules/auth';
-import styled from 'styled-components';
-import oc from 'open-color';
-import { toJS } from 'immutable';
-
-const Form = styled.form`
-    width: 100%;
-    height: auto;
-    text-align: center;
-
-    input,
-    button {
-        margin-bottom: .5rem;
-    }
-
-    input {
-        display: block;
-        width: 100%;
-        border: 1px solid ${oc.gray[3]};
-        padding: .5rem .5rem;
-        font-size: 14px;
-        color: ${oc.gray[9]};
-        &:hover,
-        &:active,
-        &:focus {
-            outline: none;
-        }
-
-        &::-webkit-input-placeholder {
-            color: ${oc.gray[6]};
-        }
-    }
-
-    button {
-        width: 100%;
-        background: #fff;
-        color: ${oc.gray[9]};
-        border: 1px solid ${oc.gray[3]};
-        border-radius: 3px;
-        padding: .5rem 0;
-        font-size: 14px;
-        cursor: pointer;
-
-        &:hover,
-        &:active,
-        &:focus {
-            outline: none;
-        }
-
-        &::-webkit-input-placeholder {
-            color: ${oc.gray[6]};
-        }
-    }
-`;
+import { Form } from 'components/Welcome';
 
 class FormContainer extends Component {
+
+    // 이메일, 패스워드 변경 handle
     handleChange = (e) => {
         const { AuthActions } = this.props;
         AuthActions.changeInput({
@@ -66,8 +16,14 @@ class FormContainer extends Component {
         });
     }
 
+    // 회원가입으로 go!
+    goSignup = () => {
+        const { history } = this.props;
+        history.push('/signup');
+    }
+
     render() {
-        const { handleChange } = this;
+        const { handleChange, goSignup } = this;
         const { form } = this.props;
         return(
             <Form>
@@ -88,7 +44,7 @@ class FormContainer extends Component {
                 <button type="button">
                     로그인
                 </button>
-                <button type="button">
+                <button type="button" onClick={goSignup}>
                     회원가입
                 </button>
             </Form>
