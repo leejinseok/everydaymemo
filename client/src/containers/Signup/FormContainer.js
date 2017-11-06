@@ -2,21 +2,44 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from 'redux/modules/auth';
-import { Form } from 'components/Signup'
+import { Form } from 'components/Signup';
+import {isEmail, isLength, isAlphanumeric} from 'validator';
 
 class FormContainer extends Component {
+
+    setError = (message) => {
+        const { AuthActions } = this.props;
+        AuthActions.setError({
+            form: 'register',
+            message
+        })
+    }
+
     handleChange = (e) => {
         const { AuthActions } = this.props;
+        const { name, value } = e.target;
         AuthActions.changeInput({
             form: 'register',
-            name: e.target.name,
-            value: e.target.value
+            name,
+            value
         });
+
+        const validation = this.validate[name](value);
+    }
+
+    validate = {
+        email: (value) => {
+            if (!isEmail(value)) {
+                this.setError('잘못 된 이메일 형식입니다.');
+                return false;
+            }
+            return true;
+        }
     }
 
     render() {
         const { handleChange } = this;
-        const { form } = this.props;
+        const { form, error } = this.props;
         return(
             <Form>
                 <input 
@@ -40,6 +63,7 @@ class FormContainer extends Component {
                     value={form.get('passwordConfirm')}
                     placeholder="비밀번호를 확인해주세요."
                     />
+                {error}
                 <button>
                     회원으로 가입할게요.
                 </button>
@@ -50,7 +74,8 @@ class FormContainer extends Component {
 
 export default connect(
     (state) => ({
-        form: state.auth.getIn(['register', 'form'])  
+        form: state.auth.getIn(['register', 'form']),
+        error: state.auth.getIn(['register', 'error']),
     }),
     (dispatch) => ({
         AuthActions: bindActionCreators(authActions, dispatch)

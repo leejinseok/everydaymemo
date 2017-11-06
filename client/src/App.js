@@ -7,7 +7,7 @@ import styled from 'styled-components';
 class App extends Component {
     render() {
         return (
-            <div>
+            <div className='App'>
                 <HeaderContainer />
                 <Route exact path="/" component={Welcome} />
                 <Route path="/signup" component={Signup} />
