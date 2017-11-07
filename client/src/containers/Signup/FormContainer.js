@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as authActions from 'redux/modules/auth';
 import { Form, AuthError } from 'components/Signup';
 import { isEmail, isLength, isAlphanumeric } from 'validator';
+import debounce from 'lodash/debounce';
 
 class FormContainer extends Component {
 
@@ -26,6 +27,32 @@ class FormContainer extends Component {
 
         const validation = this.validate[name](value);
         if (!validation) return;
+
+        if (name === 'email') this.checkEmailExist(value);
+
+    }
+
+    checkEmailExist = debounce(async (email) => {
+        const { AuthActions } = this.props;
+        try {
+            await AuthActions.checkEmailExist(email);
+        } catch (error) {
+            
+        }
+    })
+
+    handleLocalRegister = async () => {
+        const { form, error } = this.props;
+        const { email, password, passwordConfirm } = form.toJS();
+        
+        const { validate } = this;
+
+        if (error) return;
+        if (!validate.email(email) ||
+            !validate.password(password) ||
+            !validate.passwordConfirm(passwordConfirm)) {
+            return;
+        }
     }
 
     validate = {
@@ -56,7 +83,7 @@ class FormContainer extends Component {
     }
 
     render() {
-        const { handleChange } = this;
+        const { handleChange, handleLocalRegister } = this;
         const { form, error } = this.props;
         return(
             <Form>
@@ -86,7 +113,8 @@ class FormContainer extends Component {
                         {error}
                     </AuthError> : ''
                 }
-                <button>
+                <button type="button"
+                    onClick={handleLocalRegister}>
                     회원으로 가입할게요.
                 </button>
             </Form>

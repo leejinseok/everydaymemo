@@ -1,12 +1,15 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import { pender } from 'redux-pender';
+import * as AuthAPI from 'lib/api/auth';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT'; // input 값 변경
 const SET_ERROR = 'auth/SET_ERROR';
+const CHECK_EMAIL_EXIST = 'auth/CHECK_EMAIL_EXIST';
 
 export const changeInput = createAction(CHANGE_INPUT);
 export const setError = createAction(SET_ERROR);
+export const checkEmailExist = createAction(CHECK_EMAIL_EXIST, AuthAPI.checkEmailExist);
 
 const initialState = Map({
     register: Map({
@@ -40,6 +43,10 @@ export default handleActions({
     [SET_ERROR]: (state, action) => {
         const { form, message } = action.payload;
         return state.setIn([form, 'error'], message);
-    }
+    },
+    ...pender({
+        type: CHECK_EMAIL_EXIST,
+        onSuccess: (state, action) => state.setIn(['register', 'exists'], action.payload.data.exists)
+    })
 }, initialState);
 
