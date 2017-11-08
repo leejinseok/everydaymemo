@@ -5,6 +5,7 @@
   "author": "leejinseok",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "2",
     "chalk": "^2.3.0",
     "dotenv": "^4.0.0",
     "jsonwebtoken": "^8.1.0",
