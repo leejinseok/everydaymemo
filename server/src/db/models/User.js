@@ -38,4 +38,9 @@ User.statics.localRegister = function ({email, password}) {
     return user.save();
 }
 
+User.methods.validatePassword = function (password) {
+    const hashed = hash(password);
+    return this.password === hashed;
+}
+
 module.exports = mongoose.model('User', User);

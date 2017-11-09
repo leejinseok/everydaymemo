@@ -36,13 +36,18 @@ class FormContainer extends Component {
         const { AuthActions } = this.props;
         try {
             await AuthActions.checkEmailExist(email);
+            const { exists } = this.props;
+            if (exists) {
+                this.setError('이미 사용중인 이메일입니다.');
+            }
         } catch (error) {
             
         }
     })
 
     handleLocalRegister = async () => {
-        const { form, error } = this.props;
+        const { AuthActions } = this.props;
+        const { form, error, history } = this.props;
         const { email, password, passwordConfirm } = form.toJS();
         
         const { validate } = this;
@@ -53,6 +58,14 @@ class FormContainer extends Component {
             !validate.passwordConfirm(passwordConfirm)) {
             return;
         }
+        try {
+            await AuthActions.localRegister({email, password});
+            const result = this.props; 
+            history.push('/');
+        } catch (error) {
+            
+        }
+        
     }
 
     validate = {
@@ -126,6 +139,8 @@ export default connect(
     (state) => ({
         form: state.auth.getIn(['register', 'form']),
         error: state.auth.getIn(['register', 'error']),
+        result: state.auth.get('result'),
+        exists: state.auth.getIn(['register', 'exists'])
     }),
     (dispatch) => ({
         AuthActions: bindActionCreators(authActions, dispatch)

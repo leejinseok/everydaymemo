@@ -39,3 +39,24 @@ exports.localRegister = async (ctx) => {
         
     }
 }
+
+exports.localLogin = async (ctx) => {
+    const { email, password } = ctx.request.body;
+
+    try {
+        const user = await User.findByEmail(email);
+        if (!user) {
+            ctx.status = 403;
+            return;
+        }
+
+        const validated = user.validatePassword(password);
+
+        ctx.body = {
+            validated: validated
+        }
+        
+    } catch (error) {
+        ctx.throw(error,403);
+    }
+}

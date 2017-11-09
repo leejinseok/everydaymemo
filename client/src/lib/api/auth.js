@@ -1,3 +1,4 @@
 import axios from 'axios';
-const config = { proxy: { host: 'http://localhost', port: 4000 } };
-export const checkEmailExist = (email) => axios.get('/api/v1.0/auth/exists/email' + email, config);
+export const checkEmailExist = (email) => axios.get('/api/v1.0/auth/exists/email/' + email);
+export const localRegister = ({email, password}) => axios.post('/api/v1.0/auth/register/local', { email, password });
+export const localLogin = ({email, password}) => axios.post('/api/v1.0/auth/login/local', {email, password});

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from 'redux/modules/auth';
-import { Form } from 'components/Welcome';
+import { Form, AuthError } from 'components/Welcome';
 
 class FormContainer extends Component {
 
@@ -22,9 +22,15 @@ class FormContainer extends Component {
         history.push('/signup');
     }
 
+    handleLocalLogin = async () => {
+        const { AuthActions, form } = this.props;
+        const { email, password } = form.toJS();
+        await AuthActions.localLogin({email, password});
+    }
+
     render() {
-        const { handleChange, goSignup } = this;
-        const { form } = this.props;
+        const { handleChange, handleLocalLogin, goSignup } = this;
+        const { form, error } = this.props;
         return(
             <Form>
                 <input 
@@ -41,12 +47,15 @@ class FormContainer extends Component {
                     placeholder="패스워드"
                     onChange={handleChange}
                     autoComplete="false" />
-                <button type="button">
+                <button type="button" onClick={handleLocalLogin}>
                     로그인
                 </button>
                 <button type="button" onClick={goSignup}>
                     회원가입
                 </button>
+                {
+                    error ? <AuthError> {error} </AuthError> : ''
+                }
             </Form>
         );
     };
@@ -54,7 +63,8 @@ class FormContainer extends Component {
 
 export default connect(
     (state) => ({
-        form: state.auth.getIn(['login', 'form'])
+        form: state.auth.getIn(['login', 'form']),
+        error: state.auth.getIn(['login', 'error'])
     }),
     (dispatch) => ({
         AuthActions: bindActionCreators(authActions, dispatch)

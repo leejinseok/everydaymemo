@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import oc from 'open-color';
 
 const Form = styled.form`
-    width: 640px;
+    width: 100%;
     margin: 0 auto;
     height: auto;
     text-align: center;
