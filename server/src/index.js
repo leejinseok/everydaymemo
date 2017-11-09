@@ -12,14 +12,15 @@ const db = require('./db');
 db.connect();
 
 const api = require('./api');
-
 const app = new Koa();
-app.use(bodyParser());
 const router = new Router();
-router.use('/api', api.routes());
+
+app.use(bodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(cors());
+router.use('/api', api.routes());
+
 
 
 app.listen(port, () => {

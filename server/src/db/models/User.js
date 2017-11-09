@@ -29,4 +29,13 @@ User.statics.findByEmail = function (email) {
     return this.findOne({email}).exec();
 }
 
+User.statics.localRegister = function ({email, password}) {
+    const user = new this({
+        email,
+        password: hash(password)
+    });
+
+    return user.save();
+}
+
 module.exports = mongoose.model('User', User);
