@@ -23,9 +23,16 @@ class FormContainer extends Component {
     }
 
     handleLocalLogin = async () => {
-        const { AuthActions, form } = this.props;
+        const { AuthActions, form, history } = this.props;
         const { email, password } = form.toJS();
         await AuthActions.localLogin({email, password});
+        const { result } = this.props;
+        if (!result) {
+            alert('인증실패');
+            return;
+        }
+
+        history.push('/home');
     }
 
     render() {
@@ -64,7 +71,8 @@ class FormContainer extends Component {
 export default connect(
     (state) => ({
         form: state.auth.getIn(['login', 'form']),
-        error: state.auth.getIn(['login', 'error'])
+        error: state.auth.getIn(['login', 'error']),
+        result: state.auth.get('result')
     }),
     (dispatch) => ({
         AuthActions: bindActionCreators(authActions, dispatch)
