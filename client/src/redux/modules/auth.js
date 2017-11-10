@@ -5,12 +5,14 @@ import * as AuthAPI from 'lib/api/auth';
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT'; // input 값 변경
 const SET_ERROR = 'auth/SET_ERROR';
+
 const CHECK_EMAIL_EXIST = 'auth/CHECK_EMAIL_EXIST';
 const LOCAL_REGISTER = 'auth/LOCAL_REGISTER';
 const LOCAL_LOGIN = 'auth/LOCAL_LOGIN';
 
 export const changeInput = createAction(CHANGE_INPUT);
 export const setError = createAction(SET_ERROR);
+
 export const checkEmailExist = createAction(CHECK_EMAIL_EXIST, AuthAPI.checkEmailExist);
 export const localRegister = createAction(LOCAL_REGISTER, AuthAPI.localRegister);
 export const localLogin = createAction(LOCAL_LOGIN, AuthAPI.localLogin);
@@ -55,7 +57,8 @@ export default handleActions({
     }),
     ...pender({
         type: LOCAL_LOGIN,
-        onSuccess: (state, action) => state.setIn(['result'], action.payload.data.validated)
+        onSuccess: (state, action) => state.setIn(['result'], action.payload),
+        onFailure: (state, action) => state.setIn(['result'], 'no exist')
     })
 }, initialState);
 

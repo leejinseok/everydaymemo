@@ -1,5 +1,19 @@
 const User = require('db/models/User');
 
+exports.checkLoginStatus = async (ctx) => {
+    console.log(ctx.request);
+    const { user } = ctx.request;
+
+    if(!user) {
+        ctx.status = 403;
+        return;
+    }
+
+    ctx.body = {
+        user
+    };
+}
+
 exports.checkEmail = async (ctx) => {
     const { email } = ctx.params;
 
@@ -51,12 +65,25 @@ exports.localLogin = async (ctx) => {
         }
 
         const validated = user.validatePassword(password);
+        if (!validated) {
+            ctx.status = 403;
+            return;
+        }
+
+        const accessToken = await user.generateToken();
+        ctx.cookies.set('access_token', accessToken, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
 
         ctx.body = {
-            validated: validated
+            user: {
+                id: user._id,
+                email: user.email
+            }
         }
-        
+
     } catch (error) {
-        ctx.throw(error,403);
+        ctx.throw(error,500);
     }
 }

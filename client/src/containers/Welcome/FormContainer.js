@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from 'redux/modules/auth';
+import * as userActions from 'redux/modules/user';
 import { Form, AuthError } from 'components/Welcome';
 
 class FormContainer extends Component {
+
+    componentWillMount = async () => {
+        const { UserActions, user } = this.props;
+        try {
+            await UserActions.checkLoginStatus();   
+            console.log(user);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     // 이메일, 패스워드 변경 handle
     handleChange = (e) => {
@@ -22,17 +33,17 @@ class FormContainer extends Component {
         history.push('/signup');
     }
 
+    // 로그인 버튼 클릭
     handleLocalLogin = async () => {
-        const { AuthActions, form, history } = this.props;
+        const { AuthActions, form, result, history } = this.props;
         const { email, password } = form.toJS();
-        await AuthActions.localLogin({email, password});
-        const { result } = this.props;
-        if (!result) {
-            alert('인증실패');
-            return;
+        
+        try {
+            await AuthActions.localLogin({email, password});
+            history.push('/home');
+        } catch (error) {
+            alert('잘못 된 계정정보입니다.');
         }
-
-        history.push('/home');
     }
 
     render() {
@@ -72,9 +83,11 @@ export default connect(
     (state) => ({
         form: state.auth.getIn(['login', 'form']),
         error: state.auth.getIn(['login', 'error']),
-        result: state.auth.get('result')
+        result: state.auth.get('result'),
+        user: state.user.get('user')
     }),
     (dispatch) => ({
-        AuthActions: bindActionCreators(authActions, dispatch)
+        AuthActions: bindActionCreators(authActions, dispatch),
+        UserActions: bindActionCreators(userActions, dispatch)
     })
 )(FormContainer);

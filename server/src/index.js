@@ -14,7 +14,9 @@ db.connect();
 const api = require('./api');
 const app = new Koa();
 const router = new Router();
+const jwtMiddleware = require('lib/middlewares/jwt');
 
+app.use(jwtMiddleware);
 app.use(bodyParser());
 app.use(router.routes());
 app.use(router.allowedMethods());

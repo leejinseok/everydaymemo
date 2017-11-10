@@ -43,4 +43,15 @@ User.methods.validatePassword = function (password) {
     return this.password === hashed;
 }
 
+User.methods.generateToken = function () {
+    const { _id, email } = this;
+
+    return token.generateToken({
+        user: {
+            _id,
+            email
+        }
+    }, 'user');
+}
+
 module.exports = mongoose.model('User', User);
