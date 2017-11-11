@@ -6,10 +6,11 @@ module.exports = async (ctx, next) => {
         ctx.request.user = null;
         return next();
     }
-    
+
     try {
         const decoded = await decodeToken(token);
         const { user } = decoded;
+        
         // re-issue token when its age is over 3 days
         if(Date.now() / 1000 - decoded.iat > 60 * 60 * 24 * 3) {
             const freshToken = await generateToken({ user }, 'user');

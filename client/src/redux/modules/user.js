@@ -16,7 +16,8 @@ export default handleActions({
     ...pender({
         type: CHECK_LOGIN_STATUS,
         onSuccess: (state, action) => {
-            return state.set('user', Map(action.payload.data.user));
+            const user = action.payload.data.user;
+            return state.set('user', Map(user));
         }
     })
 }, initialState)

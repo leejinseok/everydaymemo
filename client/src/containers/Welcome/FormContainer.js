@@ -6,12 +6,14 @@ import * as userActions from 'redux/modules/user';
 import { Form, AuthError } from 'components/Welcome';
 
 class FormContainer extends Component {
-
     componentWillMount = async () => {
-        const { UserActions, user } = this.props;
+        const { UserActions, history } = this.props;
         try {
             await UserActions.checkLoginStatus();   
-            console.log(user);
+            const { user } = this.props;
+            if (user) {
+                history.push('/home');
+            }
         } catch (e) {
             console.log(e);
         }
@@ -48,7 +50,7 @@ class FormContainer extends Component {
 
     render() {
         const { handleChange, handleLocalLogin, goSignup } = this;
-        const { form, error } = this.props;
+        const { form, error, user } = this.props;
         return(
             <Form>
                 <input 

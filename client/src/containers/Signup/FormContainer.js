@@ -29,16 +29,16 @@ class FormContainer extends Component {
         if (!validation) return;
 
         if (name === 'email') this.checkEmailExist(value);
-
     }
 
     checkEmailExist = debounce(async (email) => {
-        const { AuthActions } = this.props;
+        const { AuthActions, history } = this.props;
         try {
             await AuthActions.checkEmailExist(email);
             const { exists } = this.props;
             if (exists) {
                 this.setError('이미 사용중인 이메일입니다.');
+                return;
             }
         } catch (error) {
             
@@ -46,8 +46,7 @@ class FormContainer extends Component {
     })
 
     handleLocalRegister = async () => {
-        const { AuthActions } = this.props;
-        const { form, error, history } = this.props;
+        const { AuthActions, form, error, history, result } = this.props;
         const { email, password, passwordConfirm } = form.toJS();
         
         const { validate } = this;
@@ -58,14 +57,13 @@ class FormContainer extends Component {
             !validate.passwordConfirm(passwordConfirm)) {
             return;
         }
+
         try {
             await AuthActions.localRegister({email, password});
-            const result = this.props; 
             history.push('/');
         } catch (error) {
-            
+            console.log(error);
         }
-        
     }
 
     validate = {

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 const Signup = ({history}) => {
     return (
         <Wrapper>
-            <FormContainer />
+            <FormContainer history={history}/>
         </Wrapper>
     )
 };
