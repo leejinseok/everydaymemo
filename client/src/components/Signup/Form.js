@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import oc from 'open-color';
 
 const Form = styled.form`
-    width: 100%;
+    max-width: 360px;
     margin: 0 auto;
     height: auto;
     text-align: center;
 
     input,
     button {
-        margin-bottom: 1rem;
+        margin-bottom: .5rem;
+        padding: .7rem 1rem;
+        border-radius: 0;
+        transition: color, border .3s;
     }
 
     input {
         display: block;
         width: 100%;
         border: 1px solid ${oc.gray[3]};
-        padding: .8rem .8rem;
         font-size: 14px;
         color: ${oc.gray[9]};
         &:hover,

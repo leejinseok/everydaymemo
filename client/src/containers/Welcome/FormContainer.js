@@ -55,20 +55,20 @@ class FormContainer extends Component {
                     type="text" 
                     name="email" 
                     value={form.get('email')}
-                    placeholder="email"
+                    placeholder="이메일을 입력해주세요."
                     onChange={handleChange}
                     autoComplete="false" />
                 <input 
                     type="password" 
                     name="password" 
                     value={form.get('password')}
-                    placeholder="패스워드"
+                    placeholder="패스워드를 입력해 주세요."
                     onChange={handleChange}
                     autoComplete="false" />
-                <button type="button" onClick={handleLocalLogin}>
+                <button className="login" type="button" onClick={handleLocalLogin}>
                     로그인
                 </button>
-                <button type="button" onClick={goSignup}>
+                <button className="signup" type="button" onClick={goSignup}>
                     회원가입
                 </button>
                 {

@@ -11,14 +11,15 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 20px;
+    font-size: 24px;
+    font-family: 'Lobster', cursive;
     ${shadow(1)};
 `;
 
 const Header = () => {
     return(
         <Wrapper>
-            매일메모
+            Everyday Memo
         </Wrapper>
     )
 };
