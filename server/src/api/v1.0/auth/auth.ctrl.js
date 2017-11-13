@@ -1,7 +1,6 @@
 const User = require('db/models/User');
 
 exports.checkLoginStatus = async (ctx) => {
-    console.log(ctx.request.user);
     const { user } = ctx.request;
 
     if(!user) {

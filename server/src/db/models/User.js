@@ -19,6 +19,7 @@ const Memo = new Schema({
 
 const User = new Schema({
     email: String, 
+    thumbnail: { type: String, default: '/static/images/default_thumbnail.png' },
     password: String,
     memo: [{
         type: Memo,

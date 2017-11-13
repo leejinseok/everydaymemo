@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { shadow, media } from 'lib/styleUtils';
 import oc from 'open-color';
+import { Profile } from './Profile';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -16,10 +17,11 @@ const Wrapper = styled.div`
     ${shadow(1)};
 `;
 
-const Header = () => {
+const Header = ({user}) => {
     return(
         <Wrapper>
             Everyday Memo
+            <Profile user={user} />
         </Wrapper>
     )
 };
