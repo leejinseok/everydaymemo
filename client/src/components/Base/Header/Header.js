@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { shadow, media } from 'lib/styleUtils';
 import oc from 'open-color';
-import { Profile } from './Profile';
+import Profile from './Profile';
+import ProfileMenu from './ProfileMenu';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -22,6 +23,7 @@ const Header = ({user}) => {
         <Wrapper>
             Everyday Memo
             <Profile user={user} />
+            <ProfileMenu />
         </Wrapper>
     )
 };
