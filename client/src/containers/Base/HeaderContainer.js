@@ -7,6 +7,12 @@ import Header from 'components/Base/Header';
 
 class HeaderContainer extends Component {
 
+    state = {
+        menu: false
+    }
+
+    
+
     componentWillMount = async () => {
         const { UserActions } = this.props;
         try {
@@ -15,12 +21,21 @@ class HeaderContainer extends Component {
             console.log(e);
         }
     }
+
+    handleProfileClick = (e) => {
+        alert('hi');
+        // this.setState({
+        //     menu: true
+        // });
+    }
     
     render () {
+        const { menu } = this.state;
+        const { handleProfileClick } = this;
         const { user } = this.props;
         return (
-            <Header user={user}/>
-        )
+            <Header user={user} menu={menu} onClick={handleProfileClick}/>
+        );
     }
 };
 

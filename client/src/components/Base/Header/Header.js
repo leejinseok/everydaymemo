@@ -18,12 +18,14 @@ const Wrapper = styled.div`
     ${shadow(1)};
 `;
 
-const Header = ({user}) => {
+const Header = ({user, menu, handleProfileClick}) => {
     return(
         <Wrapper>
             Everyday Memo
-            <Profile user={user} />
-            <ProfileMenu />
+            <Profile user={user} onClick={handleProfileClick}/>
+            {
+                menu ? <ProfileMenu/> : ''
+            }
         </Wrapper>
     )
 };
