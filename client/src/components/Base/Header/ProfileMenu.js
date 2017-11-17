@@ -22,10 +22,10 @@ const MenuWrapper = styled.div`
     }
 `;
 
-const ProfileMenu = () => {
+const ProfileMenu = ({handleLogout}) => {
     return (
         <Wrapper>
-            <MenuWrapper>
+            <MenuWrapper onClick={handleLogout}>
                 로그아웃
             </MenuWrapper>
         </Wrapper>

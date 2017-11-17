@@ -17,9 +17,9 @@ const Wrapper = styled.div`
     }
 `;
 
-const Profile = () => {
+const Profile = ({handleProfileClick}) => {
     return (
-        <Wrapper />
+        <Wrapper onClick={handleProfileClick}/>
     )
 };
 

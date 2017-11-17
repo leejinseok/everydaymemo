@@ -86,3 +86,12 @@ exports.localLogin = async (ctx) => {
         ctx.throw(error,500);
     }
 }
+
+// 로그아웃
+exports.logout = (ctx) => {
+    ctx.cookies.set('access_token', null, {
+        maxAge: 0, 
+        httpOnly: true
+    });
+    ctx.status = 204;
+};

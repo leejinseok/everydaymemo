@@ -18,13 +18,16 @@ const Wrapper = styled.div`
     ${shadow(1)};
 `;
 
-const Header = ({user, menu, handleProfileClick}) => {
+const Header = ({user, menu, handleProfileClick, handleLogout}) => {
     return(
         <Wrapper>
             Everyday Memo
-            <Profile user={user} onClick={handleProfileClick}/>
             {
-                menu ? <ProfileMenu/> : ''
+                user ? <Profile user={user} handleProfileClick={handleProfileClick}/> : ''
+            }
+            
+            {
+                menu ? <ProfileMenu handleLogout={handleLogout}/> : ''
             }
         </Wrapper>
     )

@@ -6,5 +6,6 @@ auth.get('/exists/email/:email', authCtrl.checkEmail);
 auth.post('/register/local', authCtrl.localRegister);
 auth.post('/login/local', authCtrl.localLogin);
 auth.get('/check', authCtrl.checkLoginStatus);
+auth.post('/logout', authCtrl.logout);
 
 module.exports = auth;
