@@ -57,8 +57,8 @@ export default handleActions({
     }),
     ...pender({
         type: LOCAL_LOGIN,
-        onSuccess: (state, action) => state.setIn(['result'], action.payload),
-        onFailure: (state, action) => state.setIn(['result'], 'no exist')
+        onSuccess: (state, action) => state.setIn(['result'], action.payload.data),
+        onFailure: (state, action) => state.setIn(['result'], action.payload)
     })
 }, initialState);
 

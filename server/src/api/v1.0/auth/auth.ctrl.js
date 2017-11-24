@@ -59,13 +59,13 @@ exports.localLogin = async (ctx) => {
     try {
         const user = await User.findByEmail(email);
         if (!user) {
-            ctx.status = 403;
+            ctx.body = 'no exist';
             return;
         }
 
         const validated = user.validatePassword(password);
         if (!validated) {
-            ctx.status = 403;
+            ctx.body = 'password not match';
             return;
         }
 

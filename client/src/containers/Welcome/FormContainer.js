@@ -42,9 +42,20 @@ class FormContainer extends Component {
         
         try {
             await AuthActions.localLogin({email, password});
+            const { result } = this.props;
+            if (result === 'no exist') {
+                alert('존재하지 않는 계정입니다');
+                return;
+            }
+
+            if (result === 'password not match') {
+                alert('패스워드가 일치하지 않습니다');
+                return;
+            }
+
             history.push('/home');
         } catch (error) {
-            alert('잘못 된 계정정보입니다.');
+            console.log(error);
         }
     }
 
